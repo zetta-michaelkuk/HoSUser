@@ -1,0 +1,33 @@
+{
+  "name": "hos-user",
+  "version": "0.1.0",
+  "description": "HoS Authentication Service",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "keywords": [
+    "HoS",
+    "Authentication",
+    "Auth"
+  ],
+  "author": "Michael Kuk",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^0.8.5",
+    "bluebird": "^3.3.4",
+    "coffee-script": "^1.10.0",
+    "hos-auth": "git+https://github.com/HoS0/HoSAuth.git",
+    "hos-com": "^0.2.0",
+    "jsonwebtoken": "^5.7.0",
+    "mongoose": "^4.4.8",
+    "prompt": "^1.0.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jasmine": "^2.3.0",
+    "gulp-nodemon": "^2.0.6",
+    "jasmine-spec-reporter": "^2.4.0",
+    "mockgoose": "^5.4.0-rc.1"
+  }
+}

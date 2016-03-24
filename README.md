@@ -1,3 +1,3 @@
-# HoSAuth
+# HoSUser
 
 ## TBD...
