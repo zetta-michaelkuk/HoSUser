@@ -6,6 +6,21 @@ module.exports = (Promise, mongoose, bcrypt, jwt)->
         collection: 'users'
         autoIndex: false
 
+    bucketSchema =
+        bucketId:
+            type: mongoose.Schema.Types.ObjectId
+            required: true
+            index: true
+
+        permissions:
+            type: String
+            required: true
+            enum: ['R','W','A']
+
+        relativePath:
+            type: String
+            required: true
+
     userSchema =
         email:
             type: String
@@ -30,6 +45,12 @@ module.exports = (Promise, mongoose, bcrypt, jwt)->
             type: Date,
             default: Date.now
             required: true
+
+        buckets:
+            type: [bucketSchema]
+            default: ()-> return []
+
+
 
     schema = new mongoose.Schema(userSchema, schemaOpts)
 
