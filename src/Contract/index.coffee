@@ -1,1 +1,1 @@
-module.exports = require('./serviceContract')
+module.exports = require('./serviceContract')(require('./serviceDoc'))
