@@ -12,34 +12,19 @@ authenticationService.connect()
 authenticationService.on 'message', (msg)->
     acl.handleMessage(msg)
 
-
-c1 = JSON.parse JSON.stringify serviceContract
-
-c1.serviceDoc.basePath = '/cunik'
-
+# Initialize HoS
 HoSService = new HoSCom(serviceContract)
 
-HoSService.connect().then ()->
-    pub = new HoSCom(c1)
-    pub.connect().then ()->
-        pubFunc = ()->
-            pub.sendMessage({foo: "1"} , "/user", {task: '/users', method: 'get'})
-            .then (reply)->
-                console.log reply
-            .catch (err)->
-                console.log err
+# Connect HoS to RabbitMQ
+HoSService.connect()
 
-        # setInterval pubFunc, 2000
-        pubFunc()
+# Log Sucessfull Connection
+.then ()->
+    console.log 'Listening'
 
-msgCount = 0
-
-HoSService.on '/users.get', (msg)->
-    msgCount++
-    # console.log 'received'
-    msg.reply({fake: msgCount})
-
-
-
+# Log Connection Error and Exit the Process
+.catch (err)->
+    console.error "Failed to initilize HoS, exiting."
+    process.exit()
 
 module.exports = HoSAuth
