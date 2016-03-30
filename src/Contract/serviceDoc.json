@@ -27,6 +27,12 @@
                     "default": 1000,
                     "minimum": 100,
                     "maximum": 10000
+                }, {
+                    "name": "page",
+                    "in": "query",
+                    "type": "integer",
+                    "default": "0",
+                    "minimum": 100
                 }],
                 "responses": {
                     "200": {
