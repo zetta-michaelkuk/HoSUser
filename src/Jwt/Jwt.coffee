@@ -19,4 +19,12 @@ module.exports = (Promise, jsonwebtoken, key, cert)->
                         return reject(err)
                     return resolve(decoded)
 
+        parse: (token)->
+            parsedToken = {}
+
+            parts = token.split('.')
+            parsedToken.headers = JSON.parse((new Buffer(parts[0], 'base64')).toString())
+            parsedToken.payload = JSON.parse((new Buffer(parts[1], 'base64')).toString())
+            return parsedToken
+
     return jwt
