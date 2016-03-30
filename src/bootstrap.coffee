@@ -1,17 +1,21 @@
+# Require Modules
 HoSAuth          = require('hos-auth')
 HoSCom           = require('hos-com')
 serviceContract  = require('./Contract')
+acl              = require('./Acl')
 
-c1 = JSON.parse JSON.stringify serviceContract
-
-c1.name = 'prase'
-
+# Instantiate HoSAuth
 authenticationService = new HoSAuth()
 authenticationService.connect()
 
+# Register message handler
 authenticationService.on 'message', (msg)->
-    # console.log JSON.stringify msg, null, 4
-    msg.accept()
+    acl.handleMessage(msg)
+
+
+c1 = JSON.parse JSON.stringify serviceContract
+
+c1.serviceDoc.basePath = '/cunik'
 
 HoSService = new HoSCom(serviceContract)
 
@@ -19,25 +23,21 @@ HoSService.connect().then ()->
     pub = new HoSCom(c1)
     pub.connect().then ()->
         pubFunc = ()->
-            pub.sendMessage({foo: "1"} , "User", {task: 'users', method: 'GET'})
+            pub.sendMessage({foo: "1"} , "/user", {task: '/users', method: 'get'})
             .then (reply)->
                 console.log reply
             .catch (err)->
-                console.log 'catched err'
+                console.log err
 
         # setInterval pubFunc, 2000
         pubFunc()
 
 msgCount = 0
 
-HoSService.on 'users.GET', (msg)->
-    console.log JSON.stringify msg, null, 4
+HoSService.on '/users.get', (msg)->
     msgCount++
     # console.log 'received'
-    if msgCount %% 3 isnt 0
-        msg.reply({fake: msgCount})
-    else
-        msg.reject('err')
+    msg.reply({fake: msgCount})
 
 
 
